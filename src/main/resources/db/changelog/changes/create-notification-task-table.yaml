@@ -1,0 +1,60 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-notification-task-table
+      author: sbutramev
+      changes:
+        - createTable:
+            tableName: notification_task
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: chat_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: message_text
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: notification_date_time
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValue: now()
+              - column:
+                  name: is_sent
+                  type: boolean
+                  defaultValue: false
+              - column:
+                  name: attempt_count
+                  type: int
+                  defaultValue: 0
+        - createIndex:
+            indexName: idx_notification_task_chat_id
+            tableName: notification_task
+            columns:
+              - column:
+                  name: chat_id
+        - createIndex:
+            indexName: idx_notification_task_datetime
+            tableName: notification_task
+            columns:
+              - column:
+                  name: notification_date_time
+        - createIndex:
+            indexName: idx_notification_task_is_sent
+            tableName: notification_task
+            columns:
+              - column:
+                  name: is_sent
